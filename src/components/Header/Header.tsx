@@ -35,6 +35,8 @@ const Header = () => {
   function openFullscreen() {
     modal.onOpen();
   }
+  const { data } = useSession();
+  console.log(data);
 
   return (
     <Box sx={styles}>
@@ -45,7 +47,7 @@ const Header = () => {
           <ButtonHeader next />
         </ButtonGroup>
         <Menu>
-          <MenuButton>
+          <MenuButton as="div">
             <Button
               leftIcon={<Avatar size="xs" />}
               rightIcon={<HiChevronDown />}
@@ -99,12 +101,18 @@ const Header = () => {
           </Box>
         </HStack>
         <HStack>
-          <Slider aria-label="sound-controller" defaultValue={30} w="100px">
-            <SliderTrack bg="whiteAlpha.700">
-              <SliderFilledTrack bg="spy.green" />
-            </SliderTrack>
-            <SliderThumb _focus={{ boxShadow: "none" }} boxSize={3} />
-          </Slider>
+          <Box w="100px">
+            <Slider
+              aria-label="sound-controller"
+              defaultValue={30}
+              id="sound-controller-1"
+            >
+              <SliderTrack bg="whiteAlpha.700">
+                <SliderFilledTrack bg="spy.green" />
+              </SliderTrack>
+              <SliderThumb _focus={{ boxShadow: "none" }} boxSize={3} />
+            </Slider>
+          </Box>
           <Icon
             as={AiOutlineFullscreen}
             onClick={openFullscreen}

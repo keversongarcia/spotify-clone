@@ -8,16 +8,32 @@ export default NextAuth({
       clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
     }),
   ],
-  // callbacks: {
-  //   async jwt({ token, account }) {
-  //     if (account) {
-  //       token.accessToken = account.refresh_token;
-  //     }
-  //     return token;
-  //   },
-  //   async session(session, user) {
-  //     session.user = user;
-  //     return session;
-  //   },
-  // },
+  callbacks: {
+    async jwt({ token, user, account }) {
+      if (account && user) {
+        return {
+          ...token,
+          accessToken: account.access_token,
+          accessTokenExpires: account.expires_at * 1000,
+          refreshToken: account.refresh_token,
+          username: account.providerAccountId,
+          ...user,
+        };
+      }
+
+      if (Date.now() < token.accessTokenExpires) {
+        return token;
+      }
+    },
+    async session({ session, token }) {
+      (session.user.accessToken = token.accessToken),
+        (session.user.refreshToken = token.refreshToken),
+        (session.user.username = token.username);
+
+      return session;
+    },
+    async redirect({ baseUrl }) {
+      return baseUrl;
+    },
+  },
 });

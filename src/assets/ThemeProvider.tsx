@@ -35,6 +35,7 @@ const theme = extendTheme({
     spy: {
       dark: "#0F141E",
       green: "#1db954",
+      darkgreen: "#17883f",
     },
   },
   styles: {
