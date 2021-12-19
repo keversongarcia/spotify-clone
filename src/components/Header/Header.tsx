@@ -14,6 +14,7 @@ import {
   SliderFilledTrack,
   SliderThumb,
   SliderTrack,
+  Tag,
   Text,
   useDisclosure,
   useStyleConfig,
@@ -45,7 +46,7 @@ const Header = () => {
       <FullPage {...modal} />
       <Flex as="header" justifyContent="space-between">
         <ButtonGroup>
-          <ButtonHeader previous />
+          <ButtonHeader previous onClick={() => router.back()} />
           <ButtonHeader next />
         </ButtonGroup>
         <Menu autoSelect={false}>
@@ -71,8 +72,22 @@ const Header = () => {
             </Button>
           </MenuButton>
           <MenuList zIndex={1000} bg="black" border="none">
-            <MenuItem onClick={() => router.push("/profile")}>Perfil</MenuItem>
-            <MenuItem onClick={() => signOut()}>Sair</MenuItem>
+            <MenuItem
+              isDisabled={router.pathname === "/profile"}
+              onClick={() => router.push("/profile")}
+              _hover={{ bg: "whiteAlpha.100" }}
+            >
+              Perfil
+              <Tag size="sm" ml={2} bg="spy.green">
+                Novidade
+              </Tag>
+            </MenuItem>
+            <MenuItem
+              onClick={() => signOut()}
+              _hover={{ bg: "whiteAlpha.100" }}
+            >
+              Sair
+            </MenuItem>
           </MenuList>
         </Menu>
       </Flex>
