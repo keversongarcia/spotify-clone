@@ -23,7 +23,6 @@ interface ProfileProps {
 const profile = {
   get: async () => {
     const { data } = await http.get<ProfileProps>("/me");
-    console.log(data);
   },
 };
 

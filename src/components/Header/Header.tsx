@@ -24,11 +24,13 @@ import { IoIosHeartEmpty, IoIosHeart } from "react-icons/io";
 import { AiOutlineFullscreen } from "react-icons/ai";
 import ButtonHeader from "./components/ButtonHeader";
 import FullPage from "../FullPage";
+import { useSession, signOut } from "next-auth/react";
 
 const Header = () => {
   const [favorite, setFavorite] = useState(false);
   const styles = useStyleConfig("Header");
   const modal = useDisclosure();
+  const { data: session } = useSession();
 
   function openFullscreen() {
     modal.onOpen();
@@ -55,11 +57,11 @@ const Header = () => {
               _focus={{ bg: "whiteAlpha.300" }}
               _active={{ bg: "whiteAlpha.300" }}
             >
-              Keverson
+              {session?.user?.name}
             </Button>
           </MenuButton>
           <MenuList zIndex={1000} bg="black" border="none">
-            <MenuItem>Sair</MenuItem>
+            <MenuItem onClick={() => signOut()}>Sair</MenuItem>
           </MenuList>
         </Menu>
       </Flex>
