@@ -1,18 +1,12 @@
-const Index = ({ name }) => {
-  return (
-    <div>
-      <p>Hello, {name}!</p>
-    </div>
-  );
+import { useQuery } from "react-query";
+import api from "../api";
+
+const Index = () => {
+  const { data, isSuccess } = useQuery([api.profile.get], api.profile.get, {
+    initialData: null,
+  });
+  console.log(data);
+  return <div>teste</div>;
 };
 
 export default Index;
-
-export async function getServerSideProps() {
-  const res = await fetch("http://localhost:3000/api/spotify");
-  const data = await res.json();
-
-  return {
-    props: data,
-  };
-}
