@@ -1,5 +1,6 @@
-import { ChakraProvider } from "@chakra-ui/react";
 import { QueryClient, QueryClientProvider } from "react-query";
+import ThemeProvider from "../assets/ThemeProvider";
+import Head from "../containers/Head";
 import Layout from "../containers/Layout";
 
 function MyApp({ Component, pageProps }) {
@@ -7,11 +8,12 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <ChakraProvider resetCSS>
+      <Head />
+      <ThemeProvider>
         <Layout>
           <Component {...pageProps} />
         </Layout>
-      </ChakraProvider>
+      </ThemeProvider>
     </QueryClientProvider>
   );
 }
