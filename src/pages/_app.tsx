@@ -2,17 +2,24 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import ThemeProvider from "../assets/ThemeProvider";
 import Head from "../containers/Head";
 import Layout from "../containers/Layout";
+import { useRouter } from "next/router";
 
 function MyApp({ Component, pageProps }) {
   const queryClient = new QueryClient();
+  const router = useRouter();
+  const outOfTemplate = ["/login"];
 
   return (
     <QueryClientProvider client={queryClient}>
       <Head />
       <ThemeProvider>
-        <Layout>
+        {outOfTemplate.includes(router.asPath) ? (
           <Component {...pageProps} />
-        </Layout>
+        ) : (
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        )}
       </ThemeProvider>
     </QueryClientProvider>
   );
