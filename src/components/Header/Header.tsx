@@ -6,6 +6,10 @@ import {
   Flex,
   HStack,
   Icon,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
   Slider,
   SliderFilledTrack,
   SliderThumb,
@@ -38,19 +42,26 @@ const Header = () => {
           <ButtonHeader previous />
           <ButtonHeader next />
         </ButtonGroup>
-        <Button
-          leftIcon={<Avatar size="xs" />}
-          rightIcon={<HiChevronDown />}
-          rounded="full"
-          size="sm"
-          bg="whiteAlpha.200"
-          p={1}
-          _hover={{ bg: "whiteAlpha.300" }}
-          _focus={{ bg: "whiteAlpha.300" }}
-          _active={{ bg: "whiteAlpha.300" }}
-        >
-          Keverson
-        </Button>
+        <Menu>
+          <MenuButton>
+            <Button
+              leftIcon={<Avatar size="xs" />}
+              rightIcon={<HiChevronDown />}
+              rounded="full"
+              size="sm"
+              bg="whiteAlpha.100"
+              p={1}
+              _hover={{ bg: "whiteAlpha.300" }}
+              _focus={{ bg: "whiteAlpha.300" }}
+              _active={{ bg: "whiteAlpha.300" }}
+            >
+              Keverson
+            </Button>
+          </MenuButton>
+          <MenuList zIndex={1000} bg="black" border="none">
+            <MenuItem>Sair</MenuItem>
+          </MenuList>
+        </Menu>
       </Flex>
       <Flex
         bg="whiteAlpha.50"
