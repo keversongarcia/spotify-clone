@@ -1,3 +1,4 @@
+import { tokenStorage } from "@/context/Auth.context";
 import axios from "axios";
 
 const http = axios.create({
@@ -5,7 +6,8 @@ const http = axios.create({
 });
 
 http.interceptors.request.use((config) => {
-  config.headers.Authorization = `Bearer ${process.env.SPOTIFY_TOKEN}`;
+  const token = localStorage.getItem(tokenStorage);
+  config.headers.Authorization = `Bearer ${token}`;
 
   return config;
 });

@@ -5,6 +5,7 @@ import Layout from "../containers/Layout";
 import { useRouter } from "next/router";
 import { SessionProvider } from "next-auth/react";
 import { useEffect, useState } from "react";
+import AuthProvider from "@/context/Auth.context";
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   const router = useRouter();
@@ -19,18 +20,20 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
 
   return (
     <SessionProvider session={session}>
-      <QueryClientProvider client={queryClient}>
-        <Head />
-        <ThemeProvider>
-          {outOfTemplate.includes(router.asPath) ? (
-            <Component {...pageProps} />
-          ) : (
-            <Layout>
+      <AuthProvider>
+        <QueryClientProvider client={queryClient}>
+          <Head />
+          <ThemeProvider>
+            {outOfTemplate.includes(router.asPath) ? (
               <Component {...pageProps} />
-            </Layout>
-          )}
-        </ThemeProvider>
-      </QueryClientProvider>
+            ) : (
+              <Layout>
+                <Component {...pageProps} />
+              </Layout>
+            )}
+          </ThemeProvider>
+        </QueryClientProvider>
+      </AuthProvider>
     </SessionProvider>
   );
 }

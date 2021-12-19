@@ -1,5 +1,5 @@
 import Loading from "@components/Loading";
-import { Box, Flex, Grid, Spinner, useStyleConfig } from "@chakra-ui/react";
+import { Box, Flex, Grid, useStyleConfig } from "@chakra-ui/react";
 import Footer from "@components/Footer";
 import Header from "@components/Header/Header";
 import Sidebar from "@components/Sidebar";
