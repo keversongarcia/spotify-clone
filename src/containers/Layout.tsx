@@ -1,18 +1,18 @@
-import { Box } from "@chakra-ui/react";
+import { Box, Grid } from "@chakra-ui/react";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
 
 const Layout = ({ children }) => {
   return (
-    <Box>
+    <Grid gridTemplateColumns="230px 1fr">
       <Sidebar />
       <Box>
         <Header />
-        <Box>{children}</Box>
+        <Box as="main">{children}</Box>
         <Footer />
       </Box>
-    </Box>
+    </Grid>
   );
 };
 
