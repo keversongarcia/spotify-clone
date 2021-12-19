@@ -1,7 +1,7 @@
 import { IconButton } from "@chakra-ui/react";
 import { HiChevronRight, HiChevronLeft } from "react-icons/hi";
 
-const ButtonHeader = ({ previous = false, next = false }) => {
+const ButtonHeader = ({ previous = false, next = false, ...props }) => {
   return (
     <IconButton
       icon={
@@ -14,6 +14,7 @@ const ButtonHeader = ({ previous = false, next = false }) => {
       _hover={{ bg: "whiteAlpha.300" }}
       _focus={{ bg: "whiteAlpha.300" }}
       _active={{ bg: "whiteAlpha.300" }}
+      {...props}
     />
   );
 };

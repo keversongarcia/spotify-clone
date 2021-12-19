@@ -25,18 +25,20 @@ import { AiOutlineFullscreen } from "react-icons/ai";
 import ButtonHeader from "./components/ButtonHeader";
 import FullPage from "../FullPage";
 import { useSession, signOut } from "next-auth/react";
+import { useRouter } from "next/router";
 
 const Header = () => {
+  const router = useRouter();
+  const {
+    data: { user },
+  } = useSession();
   const [favorite, setFavorite] = useState(false);
   const styles = useStyleConfig("Header");
   const modal = useDisclosure();
-  const { data: session } = useSession();
 
   function openFullscreen() {
     modal.onOpen();
   }
-  const { data } = useSession();
-  console.log(data);
 
   return (
     <Box sx={styles}>
@@ -46,10 +48,16 @@ const Header = () => {
           <ButtonHeader previous />
           <ButtonHeader next />
         </ButtonGroup>
-        <Menu>
+        <Menu autoSelect={false}>
           <MenuButton as="div">
             <Button
-              leftIcon={<Avatar size="xs" />}
+              leftIcon={
+                <Avatar
+                  size="xs"
+                  src={user?.image}
+                  bg={!user?.image && "whiteAlpha.400"}
+                />
+              }
               rightIcon={<HiChevronDown />}
               rounded="full"
               size="sm"
@@ -59,10 +67,11 @@ const Header = () => {
               _focus={{ bg: "whiteAlpha.300" }}
               _active={{ bg: "whiteAlpha.300" }}
             >
-              {session?.user?.name}
+              {user?.name}
             </Button>
           </MenuButton>
           <MenuList zIndex={1000} bg="black" border="none">
+            <MenuItem onClick={() => router.push("/profile")}>Perfil</MenuItem>
             <MenuItem onClick={() => signOut()}>Sair</MenuItem>
           </MenuList>
         </Menu>
