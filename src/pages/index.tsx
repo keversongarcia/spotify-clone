@@ -1,5 +1,3 @@
-const Index = () => {
-  return <div>teste</div>;
-};
+import Index from "@views/index/Index";
 
 export default Index;
