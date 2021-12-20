@@ -1,6 +1,9 @@
 import NextAuth from "next-auth";
 import SpotifyProvider from "next-auth/providers/spotify";
 
+const scopes =
+  "user-read-playback-state user-modify-playback-state user-library-modify";
+
 export default NextAuth({
   providers: [
     SpotifyProvider({
@@ -8,7 +11,7 @@ export default NextAuth({
       clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
       authorization: {
         params: {
-          scope: "user-read-playback-state user-modify-playback-state",
+          scope: scopes,
         },
       },
     }),

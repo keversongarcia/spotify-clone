@@ -64,19 +64,19 @@ const Header = () => {
     playing ? audio.play() : audio.pause();
   }, [playing]);
 
-  const onPlay = async () => {
+  const onPlay = async ({ cxt, off, pos }) => {
     try {
       await mutateAsync({
-        context_uri: "spotify:album:5ht7ItJgpBH7W6vJ5BqpPr",
-        offset: 5,
-        position_ms: 0,
+        context_uri: cxt,
+        offset: off,
+        position_ms: pos,
       });
     } catch (err) {
       console.log((err as Error).message);
     }
   };
 
-  console.log(player);
+  console.log("DeviceId", MediaDeviceInfo.deviceId);
 
   return (
     <Box sx={styles}>
@@ -129,138 +129,133 @@ const Header = () => {
         </Menu>
       </Flex>
 
-      {player && (
-        <Flex
-          bg="whiteAlpha.50"
-          rounded="lg"
-          p={2}
-          mt={4}
-          align="center"
-          gridGap={4}
-          justify="space-between"
-        >
-          <HStack spacing={4}>
-            <Box
-              bg={`URL(${player?.item.album.images[0].url})`}
-              bgSize="cover"
-              w="60px"
-              h="60px"
-              rounded="md"
-            />
-            <Box>
-              <Text lineHeight="4" fontWeight="semibold">
-                {player?.item.name}
-              </Text>
-              <Text fontSize="xs" lineHeight="4" color="whiteAlpha.700">
-                {player?.item.album.artists.map((art) => art.name)}
-              </Text>
-            </Box>
-            <Box>
-              <Icon
-                as={!favorite ? IoIosHeartEmpty : IoIosHeart}
-                onClick={() => setFavorite(!favorite)}
-                cursor="pointer"
-              />
-            </Box>
-          </HStack>
-          <Box w="500px">
-            <HStack justify="center">
-              <IconButton
-                variant="ghost"
-                icon={<BsSkipStartFill />}
-                rounded="full"
-                size="sm"
-                aria-label="skip-button"
-                _hover={{ bg: "whiteAlpha.50" }}
-                _focus={{ boxShadow: "none" }}
-                _active={{ bg: "whiteAlpha.200" }}
-              />
-              <IconButton
-                icon={playing ? <BsPauseFill /> : <BsFillPlayFill />}
-                color="spy.dark"
-                bg="white"
-                rounded="full"
-                size="sm"
-                aria-label="play-button"
-                onClick={() => {
-                  onPlay();
-                }}
-              />
-              <IconButton
-                variant="ghost"
-                icon={<BsSkipEndFill />}
-                rounded="full"
-                size="sm"
-                aria-label="skip-button"
-                _hover={{ bg: "whiteAlpha.50" }}
-                _focus={{ boxShadow: "none" }}
-                _active={{ bg: "whiteAlpha.200" }}
-              />
-              <IconButton
-                variant="ghost"
-                icon={<IoRepeatOutline />}
-                rounded="full"
-                size="sm"
-                aria-label="skip-button"
-                _hover={{ bg: "whiteAlpha.50" }}
-                _focus={{ boxShadow: "none" }}
-                _active={{ bg: "whiteAlpha.200" }}
-              />
-            </HStack>
-            <Slider
-              aria-label="sound-controller"
-              defaultValue={50}
-              id="sound-controller-1"
-              sx={{
-                _hover: {
-                  ".chakra-slider__thumb": {
-                    d: "block",
-                  },
-                  ".chakra-slider__filled-track": {
-                    bg: "spy.green",
-                  },
-                },
-              }}
-            >
-              <SliderTrack bg="whiteAlpha.500">
-                <SliderFilledTrack bg="whiteAlpha.800" />
-              </SliderTrack>
-
-              <SliderThumb
-                _focus={{ boxShadow: "none" }}
-                d="none"
-                boxSize={3}
-              />
-            </Slider>
+      <Flex
+        bg="whiteAlpha.50"
+        rounded="lg"
+        p={2}
+        mt={4}
+        align="center"
+        gridGap={4}
+        justify="space-between"
+      >
+        <HStack spacing={4}>
+          <Box
+            bg={`URL(${player?.item.album.images[0].url})`}
+            bgSize="cover"
+            w="60px"
+            h="60px"
+            rounded="md"
+          />
+          <Box>
+            <Text lineHeight="4" fontWeight="semibold">
+              {player?.item.name}
+            </Text>
+            <Text fontSize="xs" lineHeight="4" color="whiteAlpha.700">
+              {player?.item.album.artists.map((art) => art.name)}
+            </Text>
           </Box>
-          <HStack>
-            <Tooltip label={`${player?.device.volume_percent}%`}>
-              <Box w="100px">
-                <Slider
-                  aria-label="sound-controller"
-                  defaultValue={player?.device.volume_percent}
-                  id="sound-controller-1"
-                >
-                  <SliderTrack bg="whiteAlpha.700">
-                    <SliderFilledTrack bg="spy.green" />
-                  </SliderTrack>
-
-                  <SliderThumb _focus={{ boxShadow: "none" }} boxSize={3} />
-                </Slider>
-              </Box>
-            </Tooltip>
+          <Box>
             <Icon
-              as={AiOutlineFullscreen}
-              onClick={openFullscreen}
+              as={!favorite ? IoIosHeartEmpty : IoIosHeart}
+              onClick={() => setFavorite(!favorite)}
               cursor="pointer"
-              rounded="md"
-              p={1}
-              fontSize="2xl"
-              _hover={{ bg: "whiteAlpha.200" }}
+            />
+          </Box>
+        </HStack>
+        <Box w="500px">
+          <HStack justify="center">
+            <IconButton
+              variant="ghost"
+              icon={<BsSkipStartFill />}
+              rounded="full"
+              size="sm"
+              aria-label="skip-button"
+              _hover={{ bg: "whiteAlpha.50" }}
+              _focus={{ boxShadow: "none" }}
+              _active={{ bg: "whiteAlpha.200" }}
+            />
+            <IconButton
+              icon={playing ? <BsPauseFill /> : <BsFillPlayFill />}
+              color="spy.dark"
+              bg="white"
+              rounded="full"
+              size="sm"
+              aria-label="play-button"
+              onClick={() =>
+                onPlay({ cxt: player?.item?.album?.uri, off: 2, pos: 1 })
+              }
+            />
+            <IconButton
+              variant="ghost"
+              icon={<BsSkipEndFill />}
+              rounded="full"
+              size="sm"
+              aria-label="skip-button"
+              _hover={{ bg: "whiteAlpha.50" }}
+              _focus={{ boxShadow: "none" }}
+              _active={{ bg: "whiteAlpha.200" }}
+            />
+            <IconButton
+              variant="ghost"
+              icon={<IoRepeatOutline />}
+              rounded="full"
+              size="sm"
+              aria-label="skip-button"
+              _hover={{ bg: "whiteAlpha.50" }}
+              _focus={{ boxShadow: "none" }}
+              _active={{ bg: "whiteAlpha.200" }}
             />
           </HStack>
-        </Flex>
-      )}
+          <Slider
+            aria-label="sound-controller"
+            value={player?.progress_ms}
+            max={player?.item.duration_ms}
+            id="sound-controller-1"
+            sx={{
+              _hover: {
+                ".chakra-slider__thumb": {
+                  d: "block",
+                },
+                ".chakra-slider__filled-track": {
+                  bg: "spy.green",
+                },
+              },
+            }}
+          >
+            <SliderTrack bg="whiteAlpha.500">
+              <SliderFilledTrack bg="whiteAlpha.800" />
+            </SliderTrack>
+
+            <SliderThumb _focus={{ boxShadow: "none" }} d="none" boxSize={3} />
+          </Slider>
+        </Box>
+        <HStack>
+          <Tooltip label={`${player?.device.volume_percent}%`}>
+            <Box w="100px">
+              <Slider
+                aria-label="sound-controller"
+                defaultValue={player?.device.volume_percent}
+                id="sound-controller-1"
+              >
+                <SliderTrack bg="whiteAlpha.700">
+                  <SliderFilledTrack bg="spy.green" />
+                </SliderTrack>
+
+                <SliderThumb _focus={{ boxShadow: "none" }} boxSize={3} />
+              </Slider>
+            </Box>
+          </Tooltip>
+          <Icon
+            as={AiOutlineFullscreen}
+            onClick={openFullscreen}
+            cursor="pointer"
+            rounded="md"
+            p={1}
+            fontSize="2xl"
+            _hover={{ bg: "whiteAlpha.200" }}
+          />
+        </HStack>
+      </Flex>
     </Box>
   );
 };
