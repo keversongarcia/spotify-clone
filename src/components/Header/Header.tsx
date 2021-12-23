@@ -76,8 +76,6 @@ const Header = () => {
     }
   };
 
-  console.log("DeviceId", MediaDeviceInfo.deviceId);
-
   return (
     <Box sx={styles}>
       <FullPage {...modal} />
@@ -182,7 +180,11 @@ const Header = () => {
               size="sm"
               aria-label="play-button"
               onClick={() =>
-                onPlay({ cxt: player?.item?.album?.uri, off: 2, pos: 1 })
+                onPlay({
+                  cxt: "spotify:album:5ht7ItJgpBH7W6vJ5BqpPr",
+                  off: 5,
+                  pos: 0,
+                })
               }
             />
             <IconButton
