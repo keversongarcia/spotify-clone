@@ -41,40 +41,12 @@ import { IoRepeatOutline } from "react-icons/io5";
 
 const Header = () => {
   const router = useRouter();
-
-  const {
-    data: { user },
-  } = useSession();
-  const [favorite, setFavorite] = useState(false);
   const styles = useStyleConfig("Header");
   const modal = useDisclosure();
-  const { mutateAsync } = useMutation(api.player.play);
-  const { data: player } = useQuery(
-    ["api.home.playerCurrent"],
-    api.player.playerCurrent
-  );
-  const [audio] = useState(new Audio(player?.item?.preview_url));
-  const [playing, setPlaying] = useState(false);
 
   function openFullscreen() {
     modal.onOpen();
   }
-
-  useEffect(() => {
-    playing ? audio.play() : audio.pause();
-  }, [playing]);
-
-  const onPlay = async ({ cxt, off, pos }) => {
-    try {
-      await mutateAsync({
-        context_uri: cxt,
-        offset: off,
-        position_ms: pos,
-      });
-    } catch (err) {
-      console.log((err as Error).message);
-    }
-  };
 
   return (
     <Box sx={styles}>
@@ -86,7 +58,7 @@ const Header = () => {
         </ButtonGroup>
         <Menu autoSelect={false}>
           <MenuButton as="div">
-            <Button
+            {/* <Button
               leftIcon={
                 <Avatar
                   size="xs"
@@ -104,7 +76,7 @@ const Header = () => {
               _active={{ bg: "whiteAlpha.300" }}
             >
               {user?.name}
-            </Button>
+            </Button> */}
           </MenuButton>
           <MenuList zIndex={1000} bg="black" border="none">
             <MenuItem
@@ -126,7 +98,7 @@ const Header = () => {
           </MenuList>
         </Menu>
       </Flex>
-
+      {/* 
       <Flex
         bg="whiteAlpha.50"
         rounded="lg"
@@ -257,7 +229,7 @@ const Header = () => {
             _hover={{ bg: "whiteAlpha.200" }}
           />
         </HStack>
-      </Flex>
+      </Flex> */}
     </Box>
   );
 };

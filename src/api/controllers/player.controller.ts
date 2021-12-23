@@ -2,7 +2,9 @@ import http from "../http";
 
 interface PlayProps {
   context_uri: string;
-  offset: number;
+  offset: {
+    position: number;
+  };
   position_ms: number;
 }
 

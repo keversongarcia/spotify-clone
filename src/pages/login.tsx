@@ -2,12 +2,18 @@ import { Box, Button, Flex, Image } from "@chakra-ui/react";
 import { signIn, getProviders } from "next-auth/react";
 import { FaSpotify } from "react-icons/fa";
 
-const Login = ({ providers }) => {
+interface ProviderProps {
+  name: string;
+  id: string;
+}
+
+const Login = ({ providers }: { providers: ProviderProps }) => {
+  const providerObeject = Object.values(providers);
   return (
     <Flex align="center" justify="center" h="100vh">
       <Box textAlign="center">
         <Image src="/spotify.svg" alt="Spotify Logo" w="300px" />
-        {Object.values(providers).map((provider) => (
+        {providerObeject.map((provider) => (
           <Button
             key={provider.name}
             mt="100px"

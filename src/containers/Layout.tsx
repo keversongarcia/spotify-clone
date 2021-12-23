@@ -12,30 +12,18 @@ const Layout = ({ children }) => {
   const styles = useStyleConfig("Layout");
   const { status } = useSession();
 
-  if (status === "loading") {
-    return <Loading />;
-  }
-
-  if (status === "unauthenticated") {
-    router.push("/login");
-  }
-
-  if (status === "authenticated") {
-    return (
-      <Grid gridTemplateColumns="230px 1fr">
-        <Sidebar />
-        <Flex direction="column">
-          <Header />
-          <Box sx={styles} flexGrow={1} as="main">
-            {children}
-          </Box>
-          <Footer />
-        </Flex>
-      </Grid>
-    );
-  } else {
-    return (<></>) as ReactElement;
-  }
+  return (
+    <Grid gridTemplateColumns="230px 1fr">
+      <Sidebar />
+      <Flex direction="column">
+        <Header />
+        <Box sx={styles} flexGrow={1} as="main">
+          {children}
+        </Box>
+        <Footer />
+      </Flex>
+    </Grid>
+  );
 };
 
 export default Layout;
