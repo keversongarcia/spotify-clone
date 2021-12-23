@@ -12,7 +12,11 @@ const Login = ({ providers }: { providers: ProviderProps }) => {
   return (
     <Flex align="center" justify="center" h="100vh">
       <Box textAlign="center">
-        <Image src="/spotify.svg" alt="Spotify Logo" w="300px" />
+        <Image
+          src="https://storage.googleapis.com/pr-newsroom-wp/1/2018/11/Spotify_Logo_CMYK_Green.png"
+          alt="Spotify Logo"
+          w="300px"
+        />
         {providerObeject.map((provider) => (
           <Button
             key={provider.name}
