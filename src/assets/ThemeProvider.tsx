@@ -4,10 +4,7 @@ const components = {
   Sidebar: {
     baseStyle: {
       d: { base: "none", md: "block" },
-      minH: "100vh",
-      p: 4,
-      borderRight: "1px",
-      borderColor: "whiteAlpha.50",
+      h: "100vh",
     },
   },
   Header: {

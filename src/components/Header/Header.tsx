@@ -72,7 +72,7 @@ const Header = () => {
           </MenuList>
         </Menu>
       </Flex>
-      <Player />
+      {/* <Player /> */}
     </Box>
   );
 };

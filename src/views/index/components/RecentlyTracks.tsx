@@ -32,7 +32,7 @@ const RecentlyTracks = () => {
         {tracks.map((track) => (
           <Grid
             key={track.track.id}
-            bg="whiteAlpha.100"
+            bg="whiteAlpha.50"
             rounded="md"
             templateColumns="80px 1fr"
             overflow="hidden"

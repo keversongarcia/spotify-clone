@@ -6,11 +6,15 @@ const Sidebar = () => {
   return (
     <Box as="aside" sx={styles}>
       <Flex
-        position="sticky"
-        top={4}
+        position="fixed"
+        w="230px"
+        p={4}
+        top={0}
         direction="column"
         justify="space-between"
         h="100%"
+        borderRight="1px"
+        borderColor="whiteAlpha.50"
       >
         <Image src="/spotify.svg" alt="Spotify Logo" />
         <Box>
