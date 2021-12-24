@@ -3,6 +3,7 @@ import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 const components = {
   Sidebar: {
     baseStyle: {
+      d: { base: "none", md: "block" },
       minH: "100vh",
       p: 4,
       borderRight: "1px",

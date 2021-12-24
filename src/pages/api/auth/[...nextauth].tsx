@@ -1,14 +1,14 @@
 import spotifyApi, { LOGIN_URL } from "@/lib/spotify";
+import { toast } from "@chakra-ui/react";
 import NextAuth from "next-auth";
 import SpotifyProvider from "next-auth/providers/spotify";
 
 const refreshAccessToken = async (token) => {
   try {
     spotifyApi.setAccessToken(token.accessToken);
-    spotifyApi.serRefreshToken(token.refreshToken);
+    spotifyApi.setRefreshToken(token.refreshToken);
 
     const { body: refreshedToken } = await spotifyApi.refreshAccessToken();
-    console.log("Token foi atualizado!", refreshedToken);
 
     return {
       ...token,
@@ -17,7 +17,7 @@ const refreshAccessToken = async (token) => {
       refreshToken: refreshedToken.refresh_token ?? token.refreshToken,
     };
   } catch (error) {
-    console.log(error);
+    toast.notify(error);
     return {
       ...token,
       error: "RefreshAccessTokenError",
@@ -50,11 +50,9 @@ export default NextAuth({
       }
 
       if (Date.now() < token.accessTokenExpires) {
-        console.log("Token válido!");
         return token;
       }
 
-      console.log("Token inválido!");
       return await refreshAccessToken(token);
     },
 

@@ -13,7 +13,7 @@ const Layout = ({ children }) => {
   const { status } = useSession();
 
   return (
-    <Grid gridTemplateColumns="230px 1fr">
+    <Grid gridTemplateColumns={{ md: "230px 1fr" }}>
       <Sidebar />
       <Flex direction="column">
         <Header />
