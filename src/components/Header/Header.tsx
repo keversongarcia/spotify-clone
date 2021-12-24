@@ -37,6 +37,7 @@ import {
 } from "react-icons/bs";
 import { IoRepeatOutline } from "react-icons/io5";
 import useSpotify from "@/hooks/useSpotify";
+import { millisToMinutesAndSeconds } from "@/lib/time";
 
 const Header = () => {
   const { data: session } = useSession();
@@ -72,6 +73,7 @@ const Header = () => {
       spotifyApi.getMyCurrentPlaybackState().then((data) => {
         setIsPlaying(data?.body?.is_playing);
         setPlayer(data?.body);
+        setVolume(data?.body?.device?.volume_percent);
         setSkip(false);
       });
     }
@@ -225,7 +227,7 @@ const Header = () => {
               _focus={{ boxShadow: "none" }}
               _active={{ bg: "whiteAlpha.200" }}
             />
-            <IconButton
+            {/* <IconButton
               variant="ghost"
               icon={<IoRepeatOutline />}
               rounded="full"
@@ -234,29 +236,41 @@ const Header = () => {
               _hover={{ bg: "whiteAlpha.50" }}
               _focus={{ boxShadow: "none" }}
               _active={{ bg: "whiteAlpha.200" }}
-            />
+            /> */}
           </HStack>
-          <Slider
-            aria-label="sound-controller"
-            max={player?.item?.duration_ms}
-            id="sound-controller-1"
-            sx={{
-              _hover: {
-                ".chakra-slider__thumb": {
-                  d: "block",
+          <HStack>
+            <Text fontSize="xs" color="whiteAlpha.700">
+              {millisToMinutesAndSeconds(player?.progress_ms)}
+            </Text>
+            <Slider
+              aria-label="sound-controller"
+              max={player?.item?.duration_ms}
+              id="sound-controller-1"
+              sx={{
+                _hover: {
+                  ".chakra-slider__thumb": {
+                    d: "block",
+                  },
+                  ".chakra-slider__filled-track": {
+                    bg: "spy.green",
+                  },
                 },
-                ".chakra-slider__filled-track": {
-                  bg: "spy.green",
-                },
-              },
-            }}
-          >
-            <SliderTrack bg="whiteAlpha.500">
-              <SliderFilledTrack bg="whiteAlpha.800" />
-            </SliderTrack>
+              }}
+            >
+              <SliderTrack bg="whiteAlpha.500">
+                <SliderFilledTrack bg="whiteAlpha.800" />
+              </SliderTrack>
 
-            <SliderThumb _focus={{ boxShadow: "none" }} d="none" boxSize={3} />
-          </Slider>
+              <SliderThumb
+                _focus={{ boxShadow: "none" }}
+                d="none"
+                boxSize={3}
+              />
+            </Slider>
+            <Text fontSize="xs" color="whiteAlpha.700">
+              {millisToMinutesAndSeconds(player?.item?.duration_ms)}
+            </Text>
+          </HStack>
         </Box>
         <HStack w="300px" maxW="300px" justify="end">
           <Box w="100px">
