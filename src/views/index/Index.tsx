@@ -1,11 +1,10 @@
-import { Box, SimpleGrid } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
+import RecentlyTracks from "./components/RecentlyTracks";
 
 const Index = () => {
   return (
     <Box>
-      <SimpleGrid columns={5} gap={4}>
-        teste
-      </SimpleGrid>
+      <RecentlyTracks />
     </Box>
   );
 };
