@@ -43,6 +43,14 @@ const player = {
     }
     return result;
   },
+  device: async (data) => {
+    const { data: result, status } = await http.post("/devices", data);
+
+    if (status !== 200) {
+      throw new Error((result as any).message);
+    }
+    return result;
+  },
 };
 
 export default player;

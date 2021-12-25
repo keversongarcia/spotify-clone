@@ -15,6 +15,12 @@ const Index = () => {
     }
   }, [session, spotifyApi]);
 
+  // const deviceId = yield call()
+
+  if (navigator) {
+    console.log("ole", navigator);
+  }
+
   return (
     <Box>
       <Flex direction="column" gridGap={6}>

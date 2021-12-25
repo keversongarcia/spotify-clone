@@ -1,16 +1,10 @@
-import Loading from "@components/Loading";
 import { Box, Flex, Grid, useStyleConfig } from "@chakra-ui/react";
 import Footer from "@components/Footer";
 import Header from "@components/Header/Header";
-import Sidebar from "@components/Sidebar";
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/router";
-import { ReactElement } from "react";
+import Sidebar from "@components/Sidebar/Sidebar";
 
 const Layout = ({ children }) => {
-  const router = useRouter();
   const styles = useStyleConfig("Layout");
-  const { status } = useSession();
 
   return (
     <Grid gridTemplateColumns={{ md: "230px 1fr" }}>
