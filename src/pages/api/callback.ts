@@ -37,7 +37,6 @@ export default function callback(req: NextApiRequest, res: NextApiResponse) {
 
     request.post(config, (error, response, body) => {
       if (!error && response.statusCode === 200) {
-        console.log(body);
         const token_type = body.token_type;
         const access_token = body.access_token;
 
@@ -48,7 +47,7 @@ export default function callback(req: NextApiRequest, res: NextApiResponse) {
         // };
 
         // request.get(options, (error, response, body) => {
-        //   console.log("legal", body);
+        //   console.log(body);
         // });
 
         setCookies("token", `${token_type + " " + access_token}`, {
