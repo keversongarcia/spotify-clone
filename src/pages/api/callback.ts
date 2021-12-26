@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import request from "request";
 import { setCookies } from "cookies-next";
 
-const redirect_uri = "http://localhost:3000/api/callback";
+const redirectUri = "http://localhost:3000/api/callback";
 
 export default function callback(req: NextApiRequest, res: NextApiResponse) {
   const code = req.query.code || null;
@@ -20,7 +20,7 @@ export default function callback(req: NextApiRequest, res: NextApiResponse) {
       url: "https://accounts.spotify.com/api/token",
       form: {
         code: code,
-        redirect_uri: redirect_uri,
+        redirect_uri: redirectUri,
         grant_type: "authorization_code",
       },
       headers: {
@@ -37,12 +37,12 @@ export default function callback(req: NextApiRequest, res: NextApiResponse) {
 
     request.post(config, (error, response, body) => {
       if (!error && response.statusCode === 200) {
-        const token_type = body.token_type;
-        const access_token = body.access_token;
+        const tokenType = body.token_type;
+        const accessToken = body.access_token;
 
         // const options = {
         //   url: "https://api.spotify.com/v1/me",
-        //   headers: { Authorization: "Bearer " + access_token },
+        //   headers: { Authorization: "Bearer " + accessToken },
         //   json: true,
         // };
 
@@ -50,7 +50,7 @@ export default function callback(req: NextApiRequest, res: NextApiResponse) {
         //   console.log(body);
         // });
 
-        setCookies("token", `${token_type + " " + access_token}`, {
+        setCookies("token", `${tokenType + " " + accessToken}`, {
           req,
           res,
           httpOnly: true,
