@@ -27,7 +27,10 @@ const Sidebar = () => {
         borderColor="whiteAlpha.50"
       >
         <Box>
-          <Image src="/spotify.svg" alt="Spotify Logo" />
+          <Image
+            src="https://storage.googleapis.com/pr-newsroom-wp/1/2018/11/Spotify_Logo_CMYK_Green.png"
+            alt="Spotify Logo"
+          />
           <Box py={6}>
             {sidebar.map((sb) => (
               <Link key={sb.name} href={sb.href} passHref>

@@ -37,30 +37,31 @@ export default function callback(req: NextApiRequest, res: NextApiResponse) {
 
     request.post(config, (error, response, body) => {
       if (!error && response.statusCode === 200) {
-        const tokenType = body.token_type;
         const accessToken = body.access_token;
+        const refreshToken = body.refresh_token;
 
-        // const options = {
-        //   url: "https://api.spotify.com/v1/me",
-        //   headers: { Authorization: "Bearer " + accessToken },
-        //   json: true,
-        // };
-
-        // request.get(options, (error, response, body) => {
-        //   console.log(body);
-        // });
-
-        setCookies("token", `${tokenType + " " + accessToken}`, {
+        setCookies("access_token", accessToken, {
           req,
           res,
           httpOnly: true,
           secure: process.env.NODE_ENV !== "development",
-          maxAge: 1000 * 3600 * 24 * 30 * 1,
+          maxAge: 60,
           sameSite: "strict",
           path: "/",
         });
 
-        res.redirect("http://localhost:3000");
+        setCookies("refresh_token", refreshToken, {
+          req,
+          res,
+          httpOnly: true,
+          secure: process.env.NODE_ENV !== "development",
+          maxAge: 60,
+          sameSite: "strict",
+          path: "/",
+          expires: 60,
+        });
+
+        res.redirect("http://localhost:3000/");
       } else {
         res.redirect(
           "/#" +
