@@ -1,6 +1,5 @@
 import {
   Box,
-  Button,
   Flex,
   HStack,
   Icon,
@@ -10,8 +9,6 @@ import {
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { HiHome, HiPlus } from "react-icons/hi";
-import { MdHomeFilled } from "react-icons/md";
 import { sidebar, subSidebar } from "./utils";
 
 const Sidebar = () => {

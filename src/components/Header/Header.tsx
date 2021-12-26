@@ -13,13 +13,9 @@ import {
 } from "@chakra-ui/react";
 import { HiChevronDown } from "react-icons/hi";
 import ButtonHeader from "./components/ButtonHeader";
-import { useSession, signOut } from "next-auth/react";
 import { useRouter } from "next/router";
-import Player from "./components/Player";
 
 const Header = () => {
-  const { data: session } = useSession();
-
   const router = useRouter();
   const styles = useStyleConfig("Header");
 
@@ -36,8 +32,8 @@ const Header = () => {
               leftIcon={
                 <Avatar
                   size="xs"
-                  src={session?.user?.image}
-                  bg={!session?.user?.image && "whiteAlpha.400"}
+                  // src={session?.user?.image}
+                  // bg={!session?.user?.image && "whiteAlpha.400"}
                 />
               }
               rightIcon={<HiChevronDown />}
@@ -49,7 +45,7 @@ const Header = () => {
               _focus={{ bg: "whiteAlpha.300" }}
               _active={{ bg: "whiteAlpha.300" }}
             >
-              {session?.user?.name}
+              Nome
             </Button>
           </MenuButton>
           <MenuList zIndex={1000} bg="black" border="none">
@@ -63,12 +59,7 @@ const Header = () => {
                 Novidade
               </Tag>
             </MenuItem>
-            <MenuItem
-              onClick={() => signOut()}
-              _hover={{ bg: "whiteAlpha.100" }}
-            >
-              Sair
-            </MenuItem>
+            <MenuItem _hover={{ bg: "whiteAlpha.100" }}>Sair</MenuItem>
           </MenuList>
         </Menu>
       </Flex>

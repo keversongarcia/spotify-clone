@@ -3,7 +3,6 @@ import ThemeProvider from "../assets/ThemeProvider";
 import Head from "../containers/Head";
 import Layout from "../containers/Layout";
 import { useRouter } from "next/router";
-import { SessionProvider } from "next-auth/react";
 import { useEffect, useState } from "react";
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
@@ -18,20 +17,18 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   }, [router.asPath]);
 
   return (
-    <SessionProvider session={session}>
-      <QueryClientProvider client={queryClient}>
-        <Head />
-        <ThemeProvider>
-          {outOfTemplate.includes(router.asPath) ? (
+    <QueryClientProvider client={queryClient}>
+      <Head />
+      <ThemeProvider>
+        {outOfTemplate.includes(router.asPath) ? (
+          <Component {...pageProps} />
+        ) : (
+          <Layout>
             <Component {...pageProps} />
-          ) : (
-            <Layout>
-              <Component {...pageProps} />
-            </Layout>
-          )}
-        </ThemeProvider>
-      </QueryClientProvider>
-    </SessionProvider>
+          </Layout>
+        )}
+      </ThemeProvider>
+    </QueryClientProvider>
   );
 }
 
