@@ -11,7 +11,7 @@ const Login = () => {
           alt="Spotify Logo"
           w="300px"
         />
-        <Link href={process.env.REDIRECT_URI} passHref>
+        <Link href="/api/auth" passHref>
           <Button
             mt="100px"
             leftIcon={<FaSpotify />}

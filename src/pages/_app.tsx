@@ -3,18 +3,12 @@ import ThemeProvider from "../assets/ThemeProvider";
 import Head from "../containers/Head";
 import Layout from "../containers/Layout";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
 
-function MyApp({ Component, pageProps: { session, ...pageProps } }) {
+function MyApp({ Component, ...pageProps }) {
   const router = useRouter();
-  const [history, setHistory] = useState([]);
   const queryClient = new QueryClient();
 
   const outOfTemplate = ["/login"];
-
-  useEffect(() => {
-    setHistory((prevs) => [...prevs, router.asPath]);
-  }, [router.asPath]);
 
   return (
     <QueryClientProvider client={queryClient}>

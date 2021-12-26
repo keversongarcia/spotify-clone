@@ -18,11 +18,13 @@
     "react-dom": "17.0.2",
     "react-icons": "^4.3.1",
     "react-query": "^3.34.5",
+    "request": "^2.88.2",
     "zustand": "^3.6.7",
     "zustand-persist": "^0.4.0"
   },
   "devDependencies": {
     "@types/react": "^17.0.37",
+    "@types/request": "^2.48.7",
     "@typescript-eslint/eslint-plugin": "^5.7.0",
     "@typescript-eslint/parser": "^5.7.0",
     "eslint": "8.5.0",
