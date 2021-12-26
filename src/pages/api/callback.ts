@@ -1,19 +1,20 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import request from "request";
+import { setCookies } from "cookies-next";
 
 const redirect_uri = "http://localhost:3000/api/callback";
-const stateKey = "spotify_auth_state";
 
 export default function callback(req: NextApiRequest, res: NextApiResponse) {
   const code = req.query.code || null;
   const state = req.query.state || null;
 
-  const error = {
-    error: "state_mismatch",
-  };
-
   if (state === null) {
-    res.redirect("/#" + new URLSearchParams(error).toString());
+    res.redirect(
+      "/#" +
+        new URLSearchParams({
+          error: "state_mismatch",
+        }).toString()
+    );
   } else {
     const config = {
       url: "https://accounts.spotify.com/api/token",
@@ -36,8 +37,9 @@ export default function callback(req: NextApiRequest, res: NextApiResponse) {
 
     request.post(config, (error, response, body) => {
       if (!error && response.statusCode === 200) {
-        const access_token = body.access_token,
-          refresh_token = body.refresh_token;
+        console.log(body);
+        const token_type = body.token_type;
+        const access_token = body.access_token;
 
         // const options = {
         //   url: "https://api.spotify.com/v1/me",
@@ -49,14 +51,17 @@ export default function callback(req: NextApiRequest, res: NextApiResponse) {
         //   console.log("legal", body);
         // });
 
-        const resParams = {
-          access_token: access_token,
-          refresh_token: refresh_token,
-        };
+        setCookies("token", `${token_type + " " + access_token}`, {
+          req,
+          res,
+          httpOnly: true,
+          secure: process.env.NODE_ENV !== "development",
+          maxAge: 60 * 60 * 24,
+          sameSite: "strict",
+          path: "/",
+        });
 
-        res.redirect(
-          "http://localhost:3000/#" + new URLSearchParams(resParams).toString()
-        );
+        res.redirect("http://localhost:3000");
       } else {
         res.redirect(
           "/#" +

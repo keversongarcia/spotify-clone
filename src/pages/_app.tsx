@@ -3,6 +3,7 @@ import ThemeProvider from "../assets/ThemeProvider";
 import Head from "../containers/Head";
 import Layout from "../containers/Layout";
 import { useRouter } from "next/router";
+import AuthProvider from "@/contexts/AuthContext";
 
 function MyApp({ Component, ...pageProps }) {
   const router = useRouter();
@@ -14,13 +15,15 @@ function MyApp({ Component, ...pageProps }) {
     <QueryClientProvider client={queryClient}>
       <Head />
       <ThemeProvider>
-        {outOfTemplate.includes(router.asPath) ? (
-          <Component {...pageProps} />
-        ) : (
-          <Layout>
+        <AuthProvider>
+          {outOfTemplate.includes(router.asPath) ? (
             <Component {...pageProps} />
-          </Layout>
-        )}
+          ) : (
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
+          )}
+        </AuthProvider>
       </ThemeProvider>
     </QueryClientProvider>
   );
