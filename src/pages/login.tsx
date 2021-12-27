@@ -30,6 +30,7 @@ const Login = () => {
               rounded="full"
               color="spy.dark"
               _hover={{ bg: "white", color: "#4b8e7d" }}
+              _focus={{ boxShadow: "none" }}
             >
               Entrar com Spotify
             </Button>

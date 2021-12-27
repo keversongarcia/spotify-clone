@@ -58,7 +58,6 @@ export default function callback(req: NextApiRequest, res: NextApiResponse) {
           maxAge: 60,
           sameSite: "strict",
           path: "/",
-          expires: 60,
         });
 
         res.redirect("http://localhost:3000/");

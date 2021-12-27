@@ -6,18 +6,23 @@ export async function middleware(req: NextApiRequest & NextRequest) {
   //   cookies: req.cookies,
   //   pathname: req.nextUrl.pathname,
   // });
-  // const cookies = req.cookies;
-  // const token = cookies.token;
-  // const route = req.nextUrl;
-  // if (route.pathname.includes("/api")) {
-  //   return NextResponse.next();
-  // }
-  // if (token) {
-  //   if (route.pathname === "/login") {
-  //     return NextResponse.redirect("/");
-  //   }
-  //   if (route.pathname.includes("/api")) {
-  //     return NextResponse.next();
-  //   }
-  // }
+  const cookies = req.cookies;
+  const token = cookies.access_token;
+  const route = req.nextUrl;
+
+  if (route.pathname.includes("/api")) {
+    return NextResponse.next();
+  }
+
+  if (token) {
+    if (route.pathname === "/login") {
+      return NextResponse.redirect("/");
+    }
+  }
+
+  if (!token && !route.pathname.includes("/api") && route.pathname !== "/") {
+    if (route.pathname !== "/login") {
+      return NextResponse.redirect("/login");
+    }
+  }
 }
