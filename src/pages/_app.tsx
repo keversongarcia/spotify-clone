@@ -4,12 +4,15 @@ import Head from "../containers/Head";
 import Layout from "../containers/Layout";
 import { useRouter } from "next/router";
 import AuthProvider from "@/contexts/AuthContext";
+import { useEffect } from "react";
 
 function MyApp({ Component, ...pageProps }) {
   const router = useRouter();
   const queryClient = new QueryClient();
 
   const outOfTemplate = ["/login"];
+
+  console.log("Inicio");
 
   return (
     <QueryClientProvider client={queryClient}>
